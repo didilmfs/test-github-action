@@ -36,7 +36,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Get TF_WORKING_DIR
-        run: export TF_WORKING_DIR="$(git diff origin/master --name-only | grep '\.tf$\|\.tpl$' | sed 's/\/[^/]\+\.tf$\|\/[^/]\+\.tpl$//g' | uniq)"
+        run: export TF_WORKING_DIR="$(git diff origin/main --name-only | grep '\.tf$\|\.tpl$' | sed 's/\/[^/]\+\.tf$\|\/[^/]\+\.tpl$//g' | uniq)"
 
       - name: terraform plan
         uses: dflook/terraform-plan@v1
