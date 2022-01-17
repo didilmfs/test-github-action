@@ -34,17 +34,17 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: TestSessionName
 
+      # Runs a single command using the runners shell
+      - name: Get TF_WORKING_DIR
+        run: export TF_WORKING_DIR="$(git diff origin/master --name-only | grep '\.tf$\|\.tpl$' | sed 's/\/[^/]\+\.tf$\|\/[^/]\+\.tpl$//g' | uniq)"
+
       - name: terraform plan
         uses: dflook/terraform-plan@v1
         with:
-          path: tf
+          path: ${{ env.TF_WORKING_DIR }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
